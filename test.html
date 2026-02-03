@@ -114,63 +114,10 @@
       <p><strong>车牌照号：</strong>SK260LC-8</p>
       <p><strong>检验日期：</strong>2025年12月29日</p>
     </div>
-
-    <div class="qrcode-section">
-      <h3>扫码查看报告</h3>
-      <div id="qrcode"></div>
-      <button class="btn" onclick="downloadQRCode()">下载二维码</button>
-    </div>
   </div>
 
   <script>
-    // 页面 URL - 扫码后打开的页面地址
-    const pageUrl = window.location.href;
-
-    // 生成二维码
-    function generateQRCode() {
-      const container = document.getElementById("qrcode");
-
-      // 清空容器
-      container.innerHTML = "";
-
-      try {
-        new QRCode(container, {
-          text: pageUrl,
-          width: 200,
-          height: 200,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.L
-        });
-      } catch (error) {
-        console.error("二维码生成失败:", error);
-        alert("二维码生成失败，请检查网络连接");
-      }
-    }
-
-    // 下载二维码图片
-    function downloadQRCode() {
-      const img = document.querySelector("#qrcode img");
-      if (!img) {
-        alert("二维码尚未生成，请稍后重试");
-        return;
-      }
-
-      try {
-        const link = document.createElement("a");
-        link.download = "报告二维码.png";
-        link.href = img.src;
-        link.click();
-      } catch (error) {
-        console.error("下载失败:", error);
-        alert("下载失败，请重试");
-      }
-    }
-
-    // 页面加载完成后生成二维码
-    window.onload = function() {
-      generateQRCode();
-    };
+   
   </script>
 </body>
 </html>
