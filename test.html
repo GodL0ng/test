@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>报告查询结果</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: "Microsoft YaHei", sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #e6f7ff;
+      color: #0066cc;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      border-bottom: 1px solid #d0e3f5;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    .certificate {
+      width: 80%;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #f9f9f9;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .certificate img {
+      width: 100%;
+    }
+
+    .info {
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    .info p {
+      margin: 10px 0;
+    }
+
+    .qrcode-section {
+      margin-top: 30px;
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f8ff;
+      border-radius: 8px;
+    }
+
+    .qrcode-section h3 {
+      color: #0066cc;
+      margin-bottom: 20px;
+    }
+
+    #qrcode {
+      display: inline-block;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #qrcode img {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 30px;
+      font-size: 16px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0055aa;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">报告查询结果</div>
+
+  <div class="container">
+    <div class="certificate">
+      <!-- 使用图片占位符模拟合格证 -->
+      <img src="https://pub-141831e61e69445289222976a15b6fb3.r2.dev/Image_to_url_V2/ad3a593c8ab84ac32bad1d5f77d9eafc-imagetourl.cloud-1770094351412-g4mgly.png" alt="合格证" />
+    </div>
+
+    <div class="info">
+      <p><strong>报告编号：</strong>SZ202512ZY701B</p>
+      <p><strong>设备名称：</strong>履带式液压挖掘机</p>
+      <p><strong>委托单位：</strong>周扬波</p>
+      <p><strong>车牌照号：</strong>SK260LC-8</p>
+      <p><strong>检验日期：</strong>2025年12月29日</p>
+    </div>
+
+    <div class="qrcode-section">
+      <h3>扫码查看报告</h3>
+      <div id="qrcode"></div>
+      <button class="btn" onclick="downloadQRCode()">下载二维码</button>
+    </div>
+  </div>
+
+  <script>
+    // 页面 URL - 扫码后打开的页面地址
+    const pageUrl = window.location.href;
+
+    // 生成二维码
+    function generateQRCode() {
+      const container = document.getElementById("qrcode");
+
+      // 清空容器
+      container.innerHTML = "";
+
+      try {
+        new QRCode(container, {
+          text: pageUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.L
+        });
+      } catch (error) {
+        console.error("二维码生成失败:", error);
+        alert("二维码生成失败，请检查网络连接");
+      }
+    }
+
+    // 下载二维码图片
+    function downloadQRCode() {
+      const img = document.querySelector("#qrcode img");
+      if (!img) {
+        alert("二维码尚未生成，请稍后重试");
+        return;
+      }
+
+      try {
+        const link = document.createElement("a");
+        link.download = "报告二维码.png";
+        link.href = img.src;
+        link.click();
+      } catch (error) {
+        console.error("下载失败:", error);
+        alert("下载失败，请重试");
+      }
+    }
+
+    // 页面加载完成后生成二维码
+    window.onload = function() {
+      generateQRCode();
+    };
+  </script>
+</body>
+</html>
